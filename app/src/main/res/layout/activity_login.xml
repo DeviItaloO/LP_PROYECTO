@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:backgroundTint="@color/white">
+
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/nota"/>
+
+    <TextView
+        android:id="@+id/login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_titulo"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/login_correo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/login_correo"
+        android:layout_marginTop="20dp"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:id="@+id/login_contrasenia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/login_contraseña"
+        android:layout_marginTop="20dp"
+        android:inputType="textPassword"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+        <Button
+            android:id="@+id/btn_registrar"
+            android:layout_width="150dp"
+            android:backgroundTint="@color/color_registrar"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_registrar"/>
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="150dp"
+            android:backgroundTint="@color/color_login"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_login"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/txt_texto"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/login_logo_google"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/google"/>
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/login_logo_facebook"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/facebook"/>
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/login_logo_social"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/social"/>
+
+    </LinearLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
