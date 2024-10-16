@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     Toast.makeText(LoginActivity.this,
                                     "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+//Prubas de Italo
+
 
                     String nombre = correo.substring(0, correo.indexOf("@"));
 
