@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/registro_layout"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.registro.RegistroFragment">
+    android:id="@+id/registro_activity_layout"
+    tools:context=".ui.registro.RegistroActivity">
 
     <TextView
         android:id="@+id/registro_txt_titulo"
@@ -70,5 +70,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/registro_contrasenia" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText email_edit_text = findViewById(R.id.login_correo);
         EditText contrasenia_edit_text = findViewById(R.id.login_contrasenia);
         Button btnLogin = findViewById(R.id.btnLogin);
+        Button btnRegistrar = findViewById(R.id.btn_registrar);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +60,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Navegar al registro, ya sea como actividad o fragmento
+                Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
+                startActivity(intent);
+            }
 
+        });
     }
 }
