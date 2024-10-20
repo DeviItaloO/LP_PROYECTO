@@ -11,10 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.notasrecordatorio.ui.notas.Nota;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,10 +31,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.notasrecordatorio.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private ArrayList<Nota> listaDeNotas;
+    private CalendarView calendarView;
+    private EditText inputNota;
+    private Button btnGuardarNota;
+    private String fechaSeleccionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,5 +159,78 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Inicializamos la lista de notas
+        listaDeNotas = new ArrayList<>();
+
+        // Enlazamos el CalendarView, el EditText y el botón
+        calendarView = findViewById(R.id.calendarView);
+        inputNota = findViewById(R.id.inputNota);
+        btnGuardarNota = findViewById(R.id.btnGuardarNota);
+
+        // Cuando el usuario seleccione una fecha en el calendario
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                fechaSeleccionada = year + "-" + (month + 1) + "-" + dayOfMonth;
+            }
+        });
+
+        // Cuando el usuario haga clic en "Guardar Nota"
+        btnGuardarNota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contenidoNota = inputNota.getText().toString();
+                if (!contenidoNota.isEmpty() && fechaSeleccionada != null) {
+                    agregarNota(fechaSeleccionada, contenidoNota);
+                    inputNota.setText(""); // Limpiar el campo de texto después de guardar
+                    mostrarNotas(); // Mostrar todas las notas almacenadas
+                }
+            }
+        });
+    }
+
+    // Método para agregar una nota a la lista
+    private void agregarNota(String fecha, String contenido) {
+        Nota nuevaNota = new Nota(fecha, contenido);
+        listaDeNotas.add(nuevaNota);
+        Toast.makeText(this, "Nota guardada", Toast.LENGTH_SHORT).show();
+    }
+
+    // Método para mostrar todas las notas almacenadas
+    private void mostrarNotas() {
+        for (Nota nota : listaDeNotas) {
+            System.out.println(nota);
+        }
+    }
+
+    // Método para actualizar una nota
+    private void actualizarNota(String fecha, String nuevoContenido) {
+        for (Nota nota : listaDeNotas) {
+            if (nota.getFecha().equals(fecha)) {
+                nota.setContenido(nuevoContenido);
+                Toast.makeText(this, "Nota actualizada", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+    }
+    // Método para eliminar una nota
+    private void eliminarNota(String fecha) {
+        Iterator<Nota> iterator = listaDeNotas.iterator();
+        while (iterator.hasNext()) {
+            Nota nota = iterator.next();
+            if (nota.getFecha().equals(fecha)) {
+                iterator.remove();
+                Toast.makeText(this, "Nota eliminada", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
     }
 }
