@@ -32,7 +32,7 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.fragment_registro);
+        setContentView(R.layout.activity_registro);
 
         nombreEditText = findViewById(R.id.registro_nombre);
         emailEditText = findViewById(R.id.registro_email);

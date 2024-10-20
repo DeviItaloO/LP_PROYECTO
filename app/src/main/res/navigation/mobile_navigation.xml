@@ -22,4 +22,16 @@
         android:name="com.example.notasrecordatorio.ui.categoria.CategoryFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_categoria" />
+
+    <fragment
+        android:id="@+id/nav_usuarios"
+        android:name="com.example.notasrecordatorio.ui.registro.RegistroFragment"
+        android:label="@string/menu_crear_usuario"
+        tools:layout="@layout/fragment_registro" />
+
+    <fragment
+        android:id="@+id/nav_listado"
+        android:name="com.example.notasrecordatorio.ui.registro.ListadoFragment"
+        android:label="@string/menu_listado"
+        tools:layout="@layout/fragment_listado" />
 </navigation>

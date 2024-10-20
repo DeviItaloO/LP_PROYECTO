@@ -28,10 +28,10 @@ public class RegistroFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registro, container, false);
-        nombreEditText = view.findViewById(R.id.registro_nombre);
-        emailEditText = view.findViewById(R.id.registro_email);
-        contraseniaEditText = view.findViewById(R.id.registro_contrasenia);
-        registrarButton = view.findViewById(R.id.btn_registrar_usuario);
+        nombreEditText = view.findViewById(R.id.f_registro_nombre);
+        emailEditText = view.findViewById(R.id.f_registro_email);
+        contraseniaEditText = view.findViewById(R.id.f_registro_contrasenia);
+        registrarButton = view.findViewById(R.id.f_btn_registrar_usuario);
 
         registrarButton.setOnClickListener(new View.OnClickListener() {
             @Override

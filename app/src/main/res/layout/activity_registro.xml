@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/registro_activity_layout"
-    tools:context=".ui.registro.RegistroActivity">
+    tools:context=".login.RegistroActivity">
 
     <TextView
         android:id="@+id/registro_txt_titulo"

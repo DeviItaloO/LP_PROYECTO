@@ -24,5 +24,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_usuarios">
         </item>
+        <item
+            android:id="@+id/nav_listado"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_listado">
+        </item>
     </group>
 </menu>

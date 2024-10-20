@@ -63,7 +63,11 @@ public class MainActivity extends AppCompatActivity {
             NavigationView navigationView = binding.navView;
 
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_home, R.id.nav_notas, R.id.nav_slideshow)
+                    R.id.nav_home,
+                    R.id.nav_notas,
+                    R.id.nav_slideshow,
+                    R.id.nav_usuarios,
+                    R.id.nav_listado)
                     .setOpenableLayout(drawer)
                     .build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -83,7 +87,11 @@ public class MainActivity extends AppCompatActivity {
                         navController.navigate(R.id.nav_notas);
                     } else if (id == R.id.nav_slideshow) {
                         navController.navigate(R.id.nav_slideshow);
-                    } else {
+                    } else if(id == R.id.nav_usuarios){
+                        navController.navigate(R.id.nav_usuarios);
+                    }else if(id == R.id.nav_listado){
+                        navController.navigate(R.id.nav_listado);
+                    }else {
                         return false;
                     }
 
