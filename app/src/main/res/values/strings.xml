@@ -11,6 +11,7 @@
     <string name="menu_notas">Notas</string>
     <string name="menu_slideshow">Categorías</string>
     <string name="menu_usuarios">Usuarios</string>
+    <string name="menu_detalle">Detalle</string>
     <string name="login_titulo">LOGIN /</string>
     <string name="login_correo">Correo</string>
     <string name="login_contraseña">Contraseña</string>

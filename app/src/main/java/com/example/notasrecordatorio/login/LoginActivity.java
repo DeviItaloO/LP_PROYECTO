@@ -13,6 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.notasrecordatorio.MainActivity;
 import com.example.notasrecordatorio.R;
+import com.example.notasrecordatorio.network.cliente.ApiClient;
+import com.example.notasrecordatorio.network.dto.LoginDTO;
+import com.example.notasrecordatorio.network.dto.UsuarioDTO;
+import com.example.notasrecordatorio.network.service.ApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,25 +45,8 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     Toast.makeText(LoginActivity.this,
                                     "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-                }
-                if (correo.equals("italo@gmail.com") && contrasenia.equals("123456") ||
-                    correo.equals("admin@gmail.com") && contrasenia.equals("123456") ||
-                    correo.equals("julio@gmail.com") && contrasenia.equals("123456"))
-                {
-                    Toast.makeText(LoginActivity.this,
-                                    "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-
-                    String nombre = correo.substring(0, correo.indexOf("@"));
-
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("nombre", nombre);
-                    intent.putExtra("correo", correo);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-                    Toast.makeText(LoginActivity.this,
-                                    "Credenciales Incorrectos", Toast.LENGTH_SHORT).show();
+                }else {
+                    loginUsuario(correo, contrasenia);
                 }
             }
         });
@@ -69,5 +60,35 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+    }
+    private void loginUsuario(String correo, String contrasenia) {
+        try {
+            LoginDTO loginDTO = new LoginDTO(correo, contrasenia);
+            ApiService apiService = ApiClient.getRetrofit().create(ApiService.class);
+            Call<UsuarioDTO> call = apiService.loginUsuario(loginDTO);
+            call.enqueue(new Callback<UsuarioDTO>() {
+                @Override
+                public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                        String nombre = response.body().getNombre();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("nombre", nombre);
+                        intent.putExtra("correo", correo);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Credenciales Incorrectos", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UsuarioDTO> call, Throwable t) {
+                    Toast.makeText(LoginActivity.this, "Error en la conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(LoginActivity.this, "Error inesperado: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
