@@ -31,6 +31,7 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioV
         UsuarioDTO usuario = usuarios.get(position);
         holder.tvNombre.setText(usuario.getNombre());
         holder.tvEmail.setText(usuario.getEmail());
+        holder.tvFechaCreacion.setText(usuario.getFechaCreacion());
     }
 
     @Override
@@ -39,12 +40,13 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioV
     }
 
     public static class UsuarioViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombre, tvEmail;
+        TextView tvNombre, tvEmail, tvFechaCreacion;
 
         public UsuarioViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombre);
             tvEmail = itemView.findViewById(R.id.tvEmail);
+            tvFechaCreacion = itemView.findViewById(R.id.tvFechaCreacion);
         }
     }
 }

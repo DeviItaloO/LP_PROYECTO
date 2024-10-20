@@ -10,4 +10,8 @@
     <color name="ToolBar">#00BCD4</color>
     <color name="color_login">#2196F3</color>
     <color name="color_registrar">#F44336</color>
+    <color name="primaryText">#000000</color>
+    <color name="secondaryText">#757575</color>
+    <color name="tertiaryText">#9E9E9E</color>
+    <color name="itemBackground">#FFFFFF</color>
 </resources>
