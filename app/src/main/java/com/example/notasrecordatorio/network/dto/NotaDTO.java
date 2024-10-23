@@ -1,18 +1,28 @@
 package com.example.notasrecordatorio.network.dto;
 
-public class NotaDTO {
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class NotaDTO implements Serializable {
     private String titulo;
     private String descripcion;
     private String fechaRecordatorio;
     private String estado;
+    private UsuarioDTO usuario;
+    private CategoriaDTO categoria;
     private String fechaCreacion;
+    private Long idUsuario;
+    private Long idCategoria;
 
-    public NotaDTO(String titulo, String descripcion, String fechaRecordatorio, String estado, String fechaCreacion) {
+    public NotaDTO(String titulo, String descripcion, String fechaRecordatorio, String estado, Long idUsuario, Long idCategoria) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaRecordatorio = fechaRecordatorio;
         this.estado = estado;
-        this.fechaCreacion = fechaCreacion;
+        this.idUsuario = idUsuario;
+        this.idCategoria = idCategoria;
+        this.fechaCreacion = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
     }
 
     public String getTitulo() {
@@ -44,5 +54,17 @@ public class NotaDTO {
     }
     public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    public Long getIdCategoria() {
+        return idCategoria;
+    }
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
     }
 }

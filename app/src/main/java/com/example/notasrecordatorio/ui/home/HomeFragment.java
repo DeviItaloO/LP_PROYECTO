@@ -18,15 +18,18 @@ import com.example.notasrecordatorio.databinding.FragmentHomeBinding;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private String selectedDate;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -37,7 +40,13 @@ public class HomeFragment extends Fragment {
         // CalendarView para seleccionar la fecha
         CalendarView calendarView = binding.calendarView;
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+            // Obtén una instancia de Calendar con la fecha seleccionada
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, dayOfMonth); // Configura el año, mes y día
+
+            // Formatea la fecha al formato deseado
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+            selectedDate = dateFormat.format(calendar.getTime());
 
             // Mostrar el botón de confirmación
             binding.buttonConfirmAction.setVisibility(View.VISIBLE);
@@ -48,7 +57,6 @@ public class HomeFragment extends Fragment {
             // Mostrar el layout de acciones
             binding.recordatorioActions.setVisibility(View.VISIBLE);
 
-            // botones visibles
             binding.btnCreateNote.setVisibility(View.VISIBLE);
             binding.btnEditNote.setVisibility(View.VISIBLE);
             binding.btnDeleteNote.setVisibility(View.VISIBLE);

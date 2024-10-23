@@ -40,6 +40,8 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.2.0")
     implementation ("com.google.code.gson:gson:2.8.7")
 
+    implementation ("com.wdullaer:materialdatetimepicker:4.2.3")
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)

@@ -18,6 +18,7 @@ import com.example.notasrecordatorio.network.cliente.ApiClient;
 import com.example.notasrecordatorio.network.dto.LoginDTO;
 import com.example.notasrecordatorio.network.dto.UsuarioDTO;
 import com.example.notasrecordatorio.network.service.ApiService;
+import com.example.notasrecordatorio.network.utils.SessionUsuario;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +26,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private SessionUsuario sessionUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -36,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
             EditText contrasenia_edit_text = findViewById(R.id.et_login_contrasenia);
             Button btnLogin = findViewById(R.id.btn_Login);
             Button btnRegistrar = findViewById(R.id.btn_registrar);
+
+            sessionUsuario = new SessionUsuario(this);
 
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                         String nombre = response.body().getNombre();
+                        sessionUsuario.saveUsuario(response.body());
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.putExtra("nombre", nombre);
                         intent.putExtra("correo", correo);

@@ -4,51 +4,133 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.notasrecordatorio.databinding.FragmentNotasBinding;
+import com.example.notasrecordatorio.Enum.BaseUrlEnum;
+import com.example.notasrecordatorio.R;
+import com.example.notasrecordatorio.network.cliente.ApiClient;
+import com.example.notasrecordatorio.network.dto.NotaDTO;
+import com.example.notasrecordatorio.network.dto.UsuarioDTO;
+import com.example.notasrecordatorio.network.service.NotaService;
+import com.example.notasrecordatorio.network.utils.SessionUsuario;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NotasFragment extends Fragment {
 
-    private FragmentNotasBinding binding;
+    private EditText etTitulo;
+    private EditText etDescripcion;
+    private Spinner spinnerEstado, spinnerCategoria;
+    private Button btnGuardarNota;
+    private String fechaSeleccionada;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        NotasViewModel notasViewModel =
-                new ViewModelProvider(this).get(NotasViewModel.class);
 
-        binding = FragmentNotasBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_notas, container, false); // Reemplaza con tu layout
 
-        final TextView textView = binding.textNotas;
-        notasViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        // Recupera la fecha desde el Bundle
-        Bundle fecha = getArguments();
-        if (fecha != null) {
-            String fechaSeleccionada = fecha.getString("fechaSeleccionada", "No seleccionaste una fecha");
-            textView.setText("Fecha seleccionada: " + fechaSeleccionada);
-        } else{
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            String fechaHoy = formatoFecha.format(new Date());
-
-            textView.setText("Fecha seleccionada: " + fechaHoy);
+        // Obtener referencias a las vistas
+        etTitulo = view.findViewById(R.id.et_titulo);
+        etDescripcion = view.findViewById(R.id.et_descripcion);
+        spinnerEstado = view.findViewById(R.id.spinner_estado);
+        btnGuardarNota = view.findViewById(R.id.btn_guardar_nota);
+        spinnerCategoria = view.findViewById(R.id.spinner_categoria);
+        if (getArguments() != null) {
+            fechaSeleccionada = getArguments().getString("fechaSeleccionada");
         }
 
-        return root;
+        btnGuardarNota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String titulo = etTitulo.getText().toString();
+                String descripcion = etDescripcion.getText().toString();
+                String estado = spinnerEstado.getSelectedItem().toString();
+                String categoria = spinnerCategoria.getSelectedItem().toString();
+
+                int posicionCategoria = spinnerCategoria.getSelectedItemPosition();
+                String[] categoriasIds = getResources().getStringArray(R.array.categorias_nota_ids);
+
+                // Obtener el ID del usuario de SessionUsuario
+                SessionUsuario sessionUsuario = new SessionUsuario(getActivity());
+                UsuarioDTO currentUser = sessionUsuario.getUsuarioDTO();
+                Long idUsuario = currentUser.getId();
+                Long idCategoria = Long.parseLong(categoriasIds[posicionCategoria]);
+                String fechaRecordatorio = fechaSeleccionada;
+
+                NotaDTO notaDTO = new NotaDTO(titulo, descripcion, fechaRecordatorio, estado, idUsuario, idCategoria);
+
+                if (currentUser != null) {
+                    Long usuarioId = currentUser.getId();
+                    notaDTO.setIdUsuario(usuarioId);
+
+                    crearNota(notaDTO);
+                } else {
+                    // Manejar el caso en que el usuario no esté logueado (redirigir al login, mostrar un mensaje, etc.)
+                    Toast.makeText(getActivity(), "Debes iniciar sesión para crear una nota", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        return view;
     }
 
+    /*private String obtenerFechaRecordatorio() {
+        int year = datePicker.getYear();
+        int month = datePicker.getMonth();
+        int day = datePicker.getDayOfMonth();
+        int hour = timePicker.getCurrentHour(); // Usa getCurrentHour() para API 23+
+        int minute = timePicker.getCurrentMinute(); // Usa getCurrentMinute() para API 23+
+
+        java.util.Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hour, minute);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(calendar.getTime());
+    }*/
+
+    private void crearNota(NotaDTO notaDTO) {
+        try {
+            NotaService notaService = ApiClient.getRetrofit(BaseUrlEnum.BASE_URL_NOTAS).create(NotaService.class);
+            Call<NotaDTO> call = notaService.crearNota(notaDTO);
+
+            call.enqueue(new Callback<NotaDTO>() {
+                @Override
+                public void onResponse(Call<NotaDTO> call, Response<NotaDTO> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getActivity(), "Nota creada exitosamente", Toast.LENGTH_SHORT).show();
+                        // Navegar a otra pantalla o actualizar la lista de notas
+                    } else {
+                        Toast.makeText(getActivity(), "Error al crear la nota", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<NotaDTO> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Error en la conexión", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 }

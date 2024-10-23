@@ -50,13 +50,13 @@ public class ListadoAdapter extends RecyclerView.Adapter<ListadoAdapter.UsuarioV
             if (usuario.getNotas() != null && !usuario.getNotas().isEmpty()) {
                 String estado = usuario.getNotas().get(0).getEstado();
                 switch (estado) {
-                    case "verde":
+                    case "Pendiente":
                         holder.estado_view.setBackgroundColor(ContextCompat.getColor(holder.estado_view.getContext(), R.color.verde));
                         break;
-                    case "amarillo":
+                    case "En progreso":
                         holder.estado_view.setBackgroundColor(ContextCompat.getColor(holder.estado_view.getContext(), R.color.amarillo));
                         break;
-                    case "rojo":
+                    case "Completada":
                         holder.estado_view.setBackgroundColor(ContextCompat.getColor(holder.estado_view.getContext(), R.color.rojo));
                         break;
                     default:

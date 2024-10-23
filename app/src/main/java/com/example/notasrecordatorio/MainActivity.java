@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main);
                     //validacion para que solo exista una instancia de notas
                     if (navController.getCurrentDestination() != null &&
-                            navController.getCurrentDestination().getId() == R.id.nav_notas) {
+                        navController.getCurrentDestination().getId() == R.id.nav_notas) {
                         return;
                     }
                     //en caso se crea mas instancias, las elimina y libera la pila para evitar duplicados
