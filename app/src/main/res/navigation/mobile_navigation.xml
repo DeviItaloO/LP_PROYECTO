@@ -25,13 +25,20 @@
 
     <fragment
         android:id="@+id/nav_usuarios"
-        android:name="com.example.notasrecordatorio.ui.registro.RegistroFragment"
+        android:name="com.example.notasrecordatorio.ui.usuario.RegistroFragment"
         android:label="@string/menu_crear_usuario"
         tools:layout="@layout/fragment_registro" />
 
     <fragment
         android:id="@+id/nav_listado"
-        android:name="com.example.notasrecordatorio.ui.registro.ListadoFragment"
+        android:name="com.example.notasrecordatorio.ui.usuario.ListadoFragment"
         android:label="@string/menu_listado"
         tools:layout="@layout/fragment_listado" />
+
+    <fragment
+        android:id="@+id/nav_actualizo"
+        android:name="com.example.notasrecordatorio.ui.usuario.ActualizoFragment"
+        android:label=""
+        tools:layout="@layout/fragment_actualizo" />
+
 </navigation>

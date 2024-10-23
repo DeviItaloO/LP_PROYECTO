@@ -1,4 +1,4 @@
-package com.example.notasrecordatorio.ui.registro;
+package com.example.notasrecordatorio.ui.usuario;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.notasrecordatorio.Enum.BaseUrlEnum;
 import com.example.notasrecordatorio.R;
 import com.example.notasrecordatorio.network.cliente.ApiClient;
 import com.example.notasrecordatorio.network.service.ApiService;
@@ -44,6 +46,9 @@ public class RegistroFragment extends Fragment {
                     Toast.makeText(getActivity(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
                 } else {
                     registrarUsuario(nombre, email, contrasenia);
+                    nombreEditText.setText("");
+                    emailEditText.setText("");
+                    contraseniaEditText.setText("");
                 }
             }
         });
@@ -51,26 +56,30 @@ public class RegistroFragment extends Fragment {
         return view;
     }
     private void registrarUsuario(String nombre, String email, String contrasenia) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO(nombre, email, contrasenia);
+        try{
+            UsuarioDTO usuarioDTO = new UsuarioDTO(nombre, email, contrasenia);
 
-        ApiService apiService = ApiClient.getRetrofit().create(ApiService.class);
-        Call<UsuarioDTO> call = apiService.registrarUsuario(usuarioDTO);
+            ApiService apiService = ApiClient.getRetrofit(BaseUrlEnum.BASE_URL_USUARIO).create(ApiService.class);
+            Call<UsuarioDTO> call = apiService.registrarUsuario(usuarioDTO);
 
-        call.enqueue(new Callback<UsuarioDTO>() {
-            @Override
-            public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
-                if(response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
-                    // Navegar a otra pantalla si es necesario
-                } else {
-                    Toast.makeText(getActivity(), "Error al registrar usuario", Toast.LENGTH_SHORT).show();
+            call.enqueue(new Callback<UsuarioDTO>() {
+                @Override
+                public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
+                    if(response.isSuccessful()) {
+                        Toast.makeText(getActivity(), "Usuario registrado exitosamente", Toast.LENGTH_LONG).show();
+                        // Navegar a otra pantalla si es necesario
+                    } else {
+                        Toast.makeText(getActivity(), "Error al registrar usuario", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<UsuarioDTO> call, Throwable t) {
-                Toast.makeText(getActivity(), "Error en la conexión", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<UsuarioDTO> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Error en la conexión", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.notasrecordatorio.Enum.BaseUrlEnum;
 import com.example.notasrecordatorio.MainActivity;
 import com.example.notasrecordatorio.R;
 import com.example.notasrecordatorio.network.cliente.ApiClient;
@@ -26,45 +27,48 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        try {
+            super.onCreate(savedInstanceState);
+            EdgeToEdge.enable(this);
+            setContentView(R.layout.activity_login);
 
-        EditText email_edit_text = findViewById(R.id.login_correo);
-        EditText contrasenia_edit_text = findViewById(R.id.login_contrasenia);
-        Button btnLogin = findViewById(R.id.btnLogin);
-        Button btnRegistrar = findViewById(R.id.btn_registrar);
+            EditText email_edit_text = findViewById(R.id.et_login_correo);
+            EditText contrasenia_edit_text = findViewById(R.id.et_login_contrasenia);
+            Button btnLogin = findViewById(R.id.btn_Login);
+            Button btnRegistrar = findViewById(R.id.btn_registrar);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String correo = email_edit_text.getText().toString();
-                String contrasenia = contrasenia_edit_text.getText().toString();
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String correo = email_edit_text.getText().toString();
+                    String contrasenia = contrasenia_edit_text.getText().toString();
 
-                if(TextUtils.isEmpty(correo) || TextUtils.isEmpty(contrasenia))
-                {
-                    Toast.makeText(LoginActivity.this,
-                                    "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-                }else {
-                    loginUsuario(correo, contrasenia);
+                    if(TextUtils.isEmpty(correo) || TextUtils.isEmpty(contrasenia))
+                    {
+                        Toast.makeText(LoginActivity.this,
+                                "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+                    }else {
+                        loginUsuario(correo, contrasenia);
+                    }
                 }
-            }
-        });
+            });
 
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Navegar al registro, ya sea como actividad o fragmento
-                Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
-                startActivity(intent);
-            }
+            btnRegistrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
+                    startActivity(intent);
+                }
 
-        });
+            });
+        }catch (Exception e){
+            Toast.makeText(LoginActivity.this, "Error inesperado: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
     private void loginUsuario(String correo, String contrasenia) {
         try {
             LoginDTO loginDTO = new LoginDTO(correo, contrasenia);
-            ApiService apiService = ApiClient.getRetrofit().create(ApiService.class);
+            ApiService apiService = ApiClient.getRetrofit(BaseUrlEnum.BASE_URL_USUARIO).create(ApiService.class);
             Call<UsuarioDTO> call = apiService.loginUsuario(loginDTO);
             call.enqueue(new Callback<UsuarioDTO>() {
                 @Override
@@ -88,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e) {
-            Toast.makeText(LoginActivity.this, "Error inesperado: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Error inesperado: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }

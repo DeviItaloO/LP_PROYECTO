@@ -1,19 +1,28 @@
 package com.example.notasrecordatorio.network.cliente;
 
+import com.example.notasrecordatorio.Enum.BaseUrlEnum;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://coloca_tu_ip_aqui:8080/usuario/";
-    private static Retrofit retrofit = null;
 
-    public static Retrofit getRetrofit() {
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+    public static Retrofit getRetrofit(BaseUrlEnum baseUrlEnum) {
+        String baseUrl;
+
+        if (baseUrlEnum.getValue() == 1) {
+            baseUrl = "http://MI_IP:8080/usuario/";
+        } else if (baseUrlEnum.getValue() == 2) {
+            baseUrl = "http://MI_IP:8080/notas/";
+        } else if (baseUrlEnum.getValue() == 3) {
+            baseUrl = "http://MI_IP:8080/categoria/";
+        } else {
+            throw new IllegalArgumentException("La URL base no es válida: " + baseUrlEnum);
         }
-        return retrofit;
+
+        return new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 }

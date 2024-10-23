@@ -1,23 +1,14 @@
 package com.example.notasrecordatorio;
 
-import com.example.notasrecordatorio.R;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
@@ -26,7 +17,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.notasrecordatorio.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -94,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         return false;
                     }
-
                     // Cerrar el Drawer después de seleccionar
                     drawer.closeDrawer(GravityCompat.START);
                     return true;
@@ -103,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
             editarTextViewNombre();
             editarTextViewCorreo();
+
         }catch (Exception e){
-            Log.e("MainActivity", "Error during onCreate:", e);
+            Log.e("MainActivity", "Error en onCreate:", e);
             Toast.makeText(this, "Error al iniciar la aplicación", Toast.LENGTH_LONG).show();
         }
     }
@@ -143,15 +133,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //Aun no lo utilizo
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    //Aun no lo utilizo
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

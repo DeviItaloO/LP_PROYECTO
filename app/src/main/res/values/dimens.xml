@@ -5,4 +5,19 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="tamano_logo_width">200dp</dimen>
+    <dimen name="tamano_logo_height">200dp</dimen>
+    <dimen name="tamano_titulo">24sp</dimen>
+    <dimen name="espacio_titulo">16dp</dimen>
+    <dimen name="espacio_correo">20dp</dimen>
+    <dimen name="espacio_contrasenia">20dp</dimen>
+    <dimen name="espacio_botones">20dp</dimen>
+    <dimen name="tamano_boton_registrar">150dp</dimen>
+    <dimen name="espacio">10dp</dimen>
+    <dimen name="tamano_boton_login">150dp</dimen>
+    <dimen name="tamano_texto">20dp</dimen>
+    <dimen name="tamano_imagen_width">32dp</dimen>
+    <dimen name="tamano_imagen_height">32dp</dimen>
+    <dimen name="espacio_2">30dp</dimen>
+    <dimen name="espacio_redes">30dp</dimen>
 </resources>

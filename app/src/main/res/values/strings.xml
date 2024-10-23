@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NotasRecordatorio</string>
+    <string name="app_name">Nota de Recordatorio</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -18,8 +18,12 @@
     <string name="login_contraseña">Contraseña</string>
     <string name="txt_registrar">Regístrate</string>
     <string name="txt_login">Login</string>
-    <string name="txt_texto">------ O inicia sesión con: -----</string>
+    <string name="txt_texto">------ Inicia sesión con: -----</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_crear_usuario">Crear Usuario</string>
+    <string name="registarte_nombre">Nombre</string>
+    <string name="registarte_email">Correo</string>
+    <string name="registrate_contrasenia">Contraseña</string>
+    <string name="registrate_btn_registrar">Registrar</string>
 </resources>

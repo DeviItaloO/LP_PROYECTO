@@ -5,17 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/registro_activity_layout"
-    tools:context=".login.RegistroActivity">
+    android:backgroundTint="@color/white"
+    tools:context=".ui.usuario.ActualizoFragment">
 
     <TextView
-        android:id="@+id/et_registro_txt_titulo"
+        android:id="@+id/f_actualizo_txt_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/tamano_imagen_width"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="@dimen/tamano_imagen_width"
-        android:text="Registrarse"
+        android:layout_marginEnd="32dp"
+        android:text="Actualizar Usuario"
         android:textStyle="bold"
         android:gravity="center"
         android:textSize="24sp"
@@ -24,50 +24,51 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_registro_nombre"
+        android:id="@+id/f_actualizo_nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/tamano_imagen_width"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="@dimen/tamano_imagen_width"
-        android:hint="@string/registarte_nombre"
+        android:layout_marginEnd="32dp"
+        android:hint="Nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_registro_txt_titulo" />
+        app:layout_constraintTop_toBottomOf="@id/f_actualizo_txt_titulo" />
 
     <EditText
-        android:id="@+id/et_registro_email"
+        android:id="@+id/f_actualizo_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/tamano_imagen_width"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/tamano_imagen_width"
-        android:hint="@string/registarte_email"
+        android:layout_marginEnd="32dp"
+        android:hint="Correo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_registro_nombre" />
+        app:layout_constraintTop_toBottomOf="@id/f_actualizo_nombre" />
 
     <EditText
-        android:id="@+id/et_registro_contrasenia"
+        android:id="@+id/f_actualizo_contrasenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/tamano_imagen_width"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/tamano_imagen_width"
-        android:hint="@string/registrate_contrasenia"
+        android:layout_marginEnd="32dp"
+        android:hint="Contraseña"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_registro_email" />
+        app:layout_constraintTop_toBottomOf="@id/f_actualizo_email" />
 
     <Button
-        android:id="@+id/btn_registrar_usuario"
+        android:id="@+id/f_btn_actualizar_usuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/tamano_imagen_width"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/tamano_imagen_width"
-        android:text="@string/registrate_btn_registrar"
+        android:layout_marginEnd="32dp"
+        android:text="Actualizar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_registro_contrasenia" />
+        app:layout_constraintTop_toBottomOf="@id/f_actualizo_contrasenia" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
