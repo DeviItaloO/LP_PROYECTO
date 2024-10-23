@@ -39,6 +39,13 @@ public class NotasFragment extends Fragment {
     private Button btnGuardarNota;
     private String fechaSeleccionada;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            fechaSeleccionada = getArguments().getString("fechaSeleccionada");
+        }
+    }
 
     @Nullable
     @Override
@@ -89,20 +96,6 @@ public class NotasFragment extends Fragment {
 
         return view;
     }
-
-    /*private String obtenerFechaRecordatorio() {
-        int year = datePicker.getYear();
-        int month = datePicker.getMonth();
-        int day = datePicker.getDayOfMonth();
-        int hour = timePicker.getCurrentHour(); // Usa getCurrentHour() para API 23+
-        int minute = timePicker.getCurrentMinute(); // Usa getCurrentMinute() para API 23+
-
-        java.util.Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, hour, minute);
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-        return dateFormat.format(calendar.getTime());
-    }*/
 
     private void crearNota(NotaDTO notaDTO) {
         try {
