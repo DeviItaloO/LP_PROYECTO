@@ -58,9 +58,6 @@ public class NotasFragment extends Fragment {
         spinnerEstado = view.findViewById(R.id.spinner_estado);
         btnGuardarNota = view.findViewById(R.id.btn_guardar_nota);
         spinnerCategoria = view.findViewById(R.id.spinner_categoria);
-        if (getArguments() != null) {
-            fechaSeleccionada = getArguments().getString("fechaSeleccionada");
-        }
 
         btnGuardarNota.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +65,11 @@ public class NotasFragment extends Fragment {
                 String titulo = etTitulo.getText().toString();
                 String descripcion = etDescripcion.getText().toString();
                 String estado = spinnerEstado.getSelectedItem().toString();
-                String categoria = spinnerCategoria.getSelectedItem().toString();
+
+                if (fechaSeleccionada == null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                    fechaSeleccionada = dateFormat.format(Calendar.getInstance().getTime());
+                }
 
                 int posicionCategoria = spinnerCategoria.getSelectedItemPosition();
                 String[] categoriasIds = getResources().getStringArray(R.array.categorias_nota_ids);

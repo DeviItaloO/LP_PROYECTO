@@ -19,6 +19,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.notasrecordatorio.databinding.ActivityMainBinding;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -45,8 +49,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //en caso se crea mas instancias, las elimina y libera la pila para evitar duplicados
                     /*navController.popBackStack(R.id.nav_home, true);*/
-
-                    navController.navigate(R.id.nav_notas);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                    String fechaActual = dateFormat.format(Calendar.getInstance().getTime());
+                    // fecha actual
+                    Bundle bundle = new Bundle();
+                    bundle.putString("fechaSeleccionada", fechaActual);
+                    navController.navigate(R.id.nav_notas, bundle);
                 }
             });
             DrawerLayout drawer = binding.drawerLayout;
