@@ -10,11 +10,11 @@ public class ApiClient {
         String baseUrl;
 
         if (baseUrlEnum.getValue() == 1) {
-            baseUrl = "http://MI_IP:8080/usuario/"; /* coloca tu ip */
+            baseUrl = "http://192.168.18.160:8080/api/usuario/"; /* coloca tu ip */
         } else if (baseUrlEnum.getValue() == 2) {
-            baseUrl = "http://MI_IP:8080/notas/"; /* coloca tu ip */
+            baseUrl = "http://192.168.18.160:8080/api/nota/"; /* coloca tu ip */
         } else if (baseUrlEnum.getValue() == 3) {
-            baseUrl = "http://MI_IP:8080/categoria/"; /* coloca tu ip */
+            baseUrl = "http://192.168.18.160:8080/api/categoria/"; /* coloca tu ip */
         } else {
             throw new IllegalArgumentException("La URL base no es válida: " + baseUrlEnum);
         }
