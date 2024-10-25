@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
                     R.id.nav_notas,
                     R.id.nav_slideshow,
                     R.id.nav_usuarios,
-                    R.id.nav_listado)
+                    R.id.nav_listado,
+                    R.id.nav_recordatorio)
                     .setOpenableLayout(drawer)
                     .build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -89,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
                         navController.navigate(R.id.nav_usuarios);
                     }else if(id == R.id.nav_listado){
                         navController.navigate(R.id.nav_listado);
-                    }else {
+                    }else if(id == R.id.nav_recordatorio){
+                        navController.navigate(R.id.nav_recordatorio);
+                    }else{
                         return false;
                     }
                     // Cerrar el Drawer después de seleccionar

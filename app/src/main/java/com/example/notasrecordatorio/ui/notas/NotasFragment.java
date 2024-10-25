@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,13 +19,18 @@ import androidx.fragment.app.Fragment;
 import com.example.notasrecordatorio.Enum.BaseUrlEnum;
 import com.example.notasrecordatorio.R;
 import com.example.notasrecordatorio.network.cliente.ApiClient;
+import com.example.notasrecordatorio.network.dto.CategoriaDTO;
 import com.example.notasrecordatorio.network.dto.NotaDTO;
 import com.example.notasrecordatorio.network.dto.UsuarioDTO;
+import com.example.notasrecordatorio.network.service.ApiService;
+import com.example.notasrecordatorio.network.service.CategoriaService;
 import com.example.notasrecordatorio.network.service.NotaService;
 import com.example.notasrecordatorio.network.utils.SessionUsuario;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -38,6 +44,8 @@ public class NotasFragment extends Fragment {
     private Spinner spinnerEstado, spinnerCategoria;
     private Button btnGuardarNota;
     private String fechaSeleccionada;
+    private List<CategoriaDTO> categorias;
+    private ArrayAdapter<String> categoriaAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +67,15 @@ public class NotasFragment extends Fragment {
         btnGuardarNota = view.findViewById(R.id.btn_guardar_nota);
         spinnerCategoria = view.findViewById(R.id.spinner_categoria);
 
+        // Inicializar la lista de categorías
+        categorias = new ArrayList<>();
+        // Crear el adaptador para el Spinner
+        categoriaAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item);
+        categoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategoria.setAdapter(categoriaAdapter);
+
+        loadCategories();
+
         btnGuardarNota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,16 +89,14 @@ public class NotasFragment extends Fragment {
                 }
 
                 int posicionCategoria = spinnerCategoria.getSelectedItemPosition();
-                String[] categoriasIds = getResources().getStringArray(R.array.categorias_nota_ids);
+                Long idCategoria = categorias.get(posicionCategoria).getId();
 
-                // Obtener el ID del usuario de SessionUsuario
                 SessionUsuario sessionUsuario = new SessionUsuario(getActivity());
                 UsuarioDTO currentUser = sessionUsuario.getUsuarioDTO();
                 Long idUsuario = currentUser.getId();
-                Long idCategoria = Long.parseLong(categoriasIds[posicionCategoria]);
                 String fechaRecordatorio = fechaSeleccionada;
 
-                NotaDTO notaDTO = new NotaDTO(titulo, descripcion, fechaRecordatorio, estado, idUsuario, idCategoria);
+                NotaDTO notaDTO = new NotaDTO(null,titulo, descripcion, fechaRecordatorio, estado, idUsuario, idCategoria);
 
                 if (currentUser != null) {
                     Long usuarioId = currentUser.getId();
@@ -89,7 +104,6 @@ public class NotasFragment extends Fragment {
 
                     crearNota(notaDTO);
                 } else {
-                    // Manejar el caso en que el usuario no esté logueado (redirigir al login, mostrar un mensaje, etc.)
                     Toast.makeText(getActivity(), "Debes iniciar sesión para crear una nota", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -108,7 +122,7 @@ public class NotasFragment extends Fragment {
                 public void onResponse(Call<NotaDTO> call, Response<NotaDTO> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(getActivity(), "Nota creada exitosamente", Toast.LENGTH_SHORT).show();
-                        // Navegar a otra pantalla o actualizar la lista de notas
+                        // Aquí puedes navegar a otra pantalla o actualizar la lista de notas
                     } else {
                         Toast.makeText(getActivity(), "Error al crear la nota", Toast.LENGTH_SHORT).show();
                     }
@@ -123,6 +137,34 @@ public class NotasFragment extends Fragment {
             throw new RuntimeException(e);
         }
     }
+
+    private void loadCategories() {
+        CategoriaService categoriaService = ApiClient.getRetrofit(BaseUrlEnum.BASE_URL_CATEGORIA).create(CategoriaService.class);
+        Call<List<CategoriaDTO>> call = categoriaService.listarCategoria();
+        call.enqueue(new Callback<List<CategoriaDTO>>() {
+            @Override
+            public void onResponse(Call<List<CategoriaDTO>> call, Response<List<CategoriaDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    categorias.clear();
+                    categorias.addAll(response.body());
+
+                    categoriaAdapter.clear();
+                    for (CategoriaDTO categoria : categorias) {
+                        categoriaAdapter.add(categoria.getNombre());
+                    }
+                    categoriaAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getContext(), "Error al cargar las categorías", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CategoriaDTO>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error en la conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

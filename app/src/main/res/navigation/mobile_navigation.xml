@@ -41,4 +41,10 @@
         android:label=""
         tools:layout="@layout/fragment_actualizo" />
 
+    <fragment
+        android:id="@+id/nav_recordatorio"
+        android:name="com.example.notasrecordatorio.ui.recordatorio.RecordatorioFragment"
+        android:label="@string/menu_recordatorio"
+        tools:layout="@layout/fragment_recordatorio" />
+
 </navigation>

@@ -16,13 +16,11 @@ public interface NotaService {
     // Obtener todas las notas
     @GET("buscar")
     Call<List<NotaDTO>> obtenerNotas();
-
     // Crear una nueva nota
     @POST("crear")
     Call<NotaDTO> crearNota(@Body NotaDTO nota);
     @PUT("actualizar/{id}")
     Call<NotaDTO> actualizarNota(@Path("id")Long id, @Body NotaDTO notaDTO);
-
 
     // Eliminar una nota por fecha
     @DELETE("notas/{fecha}")

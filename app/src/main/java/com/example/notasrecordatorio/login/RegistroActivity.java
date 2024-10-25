@@ -17,9 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.notasrecordatorio.Enum.BaseUrlEnum;
 import com.example.notasrecordatorio.R;
 import com.example.notasrecordatorio.network.cliente.ApiClient;
+import com.example.notasrecordatorio.network.dto.LoginDTO;
 import com.example.notasrecordatorio.network.service.ApiService;
 import com.example.notasrecordatorio.network.dto.UsuarioDTO;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,7 +62,9 @@ public class RegistroActivity extends AppCompatActivity {
     private void registrarUsuario (String nombre, String email, String contrasenia){
         try {
             UsuarioDTO usuarioDTO = new UsuarioDTO(nombre, email, contrasenia);
+            //Log.d("registrarUsuario ", new GsonBuilder().setPrettyPrinting().create().toJson(new LoginDTO(email, contrasenia)));
             ApiService apiService = ApiClient.getRetrofit(BaseUrlEnum.BASE_URL_USUARIO).create(ApiService.class);
+            //Log.d("ApiService URL: ", ApiClient.getRetrofit(BaseUrlEnum.BASE_URL_USUARIO).baseUrl().toString());
             Call<UsuarioDTO> call = apiService.registrarUsuario(usuarioDTO);
             call.enqueue(new Callback<UsuarioDTO>() {
                 @Override
@@ -83,7 +87,7 @@ public class RegistroActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             Log.e("RegistroActivity", "Exception en registrarUsuario", e);
-            Toast.makeText(RegistroActivity.this, "Error inesperado: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistroActivity.this, "Error inesperado: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }

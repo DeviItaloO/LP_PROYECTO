@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class NotaDTO implements Serializable {
+    private Long id;
     private String titulo;
     private String descripcion;
     private String fechaRecordatorio;
@@ -15,7 +16,10 @@ public class NotaDTO implements Serializable {
     private Long idUsuario;
     private Long idCategoria;
 
-    public NotaDTO(String titulo, String descripcion, String fechaRecordatorio, String estado, Long idUsuario, Long idCategoria) {
+    public NotaDTO(Long id){this.id = id;}
+
+    public NotaDTO(Long id,String titulo, String descripcion, String fechaRecordatorio, String estado, Long idUsuario, Long idCategoria) {
+        this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaRecordatorio = fechaRecordatorio;
@@ -66,5 +70,23 @@ public class NotaDTO implements Serializable {
     }
     public void setIdCategoria(Long idCategoria) {
         this.idCategoria = idCategoria;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public UsuarioDTO getUsuario() {
+        return usuario;
+    }
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
+    }
+    public CategoriaDTO getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(CategoriaDTO categoria) {
+        this.categoria = categoria;
     }
 }
